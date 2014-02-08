@@ -1,0 +1,9 @@
+{% macro form_field(field) %}
+<div class="field{% if field.errors %} error{% endif %}">
+  {{ field.label }}
+  {{ field(required=field.flags.required, **kwargs) }}
+  {% if field.errors %}
+  <p class="message">{{ field.errors[0] }}</p>
+  {% endif %}
+</div>
+{% endmacro %}
