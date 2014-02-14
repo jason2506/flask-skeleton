@@ -17,9 +17,10 @@ def _init_db(app, create_db):
 
 
 def _init_jinja(app):
-    app.jinja_env.globals['site_title'] = 'Skeleton'
-    app.jinja_env.globals['description'] = ''
-    app.jinja_env.globals['author'] = ''
+    app.jinja_env.add_extension('jinja2.ext.do')
+    app.jinja_env.globals['site_name'] = app.config.get('WEBSITE_NAME', '')
+    app.jinja_env.globals['site_meta'] = app.config.get('WEBSITE_META', {})
+    app.jinja_env.globals['inherit_site_meta'] = False
 
 
 def _init_login(app):

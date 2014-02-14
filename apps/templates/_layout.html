@@ -4,9 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{{ description }}">
-    <meta name="author" content="{{ author }}">
-    <title>{{ page_title }}</title>
+    {% with meta = site_meta %}
+      {% if inherit_site_meta %}
+        {% set meta = page_meta|default({}) %}
+      {% elif page_meta is defined %}
+        {% do meta.update(page_meta) %}
+      {% endif %}
+      {% for name, content in meta.iteritems() %}
+      <meta name="{{ name }}" content="{{ content }}">
+      {% endfor %}
+    {% endwith %}
+    <title>{% if page_title %}{{ page_title }} - {% endif %}{{ site_name }}</title>
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
