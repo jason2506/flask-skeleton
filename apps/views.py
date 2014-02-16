@@ -3,7 +3,8 @@
 from flask import Blueprint, request, url_for, redirect, render_template
 from flask.ext.login import current_user, login_user, logout_user, login_required
 
-from .forms import SigninForm
+from .models import User
+from .forms import SigninForm, SignupForm
 
 module = Blueprint('skeleton', __name__)
 
@@ -13,8 +14,8 @@ def index():
     return render_template('index.html')
 
 
-@module.route('/login', methods=['GET', 'POST'])
-def login():
+@module.route('/signin', methods=['GET', 'POST'])
+def signin():
     if current_user is not None and current_user.is_authenticated():
         return redirect(url_for('.index'))
 
@@ -26,8 +27,23 @@ def login():
     return render_template('signin.html', form=form)
 
 
-@module.route('/logout')
+@module.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if current_user is not None and current_user.is_authenticated():
+        return redirect(url_for('.index'))
+
+    user = User()
+    form = SignupForm(request.form, obj=user)
+    if form.validate_on_submit():
+        form.populate_obj(user)
+        user.save()
+        return redirect(url_for('.index'))
+
+    return render_template('signup.html', form=form)
+
+
+@module.route('/signout')
 @login_required
-def logout():
+def signout():
     logout_user()
     return redirect(url_for('.index'))

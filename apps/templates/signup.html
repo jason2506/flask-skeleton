@@ -1,0 +1,14 @@
+{% extends "_layout.html" %}
+{% from '_macros.html' import form_field %}
+{% set page_title = 'Sign up' %}
+{% block content %}
+<form method="post" role="form">
+  {{ form_field(form.name, autofocus=True) }}
+  {{ form_field(form.raw_pwd) }}
+  {{ form_field(form.confirm_pwd) }}
+  <div class="form-footer">
+    {{ form.csrf_token }}
+    <button type="submit">Submit</button>
+  </div>
+</form>
+{% endblock %}

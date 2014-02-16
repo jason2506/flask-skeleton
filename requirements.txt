@@ -1,6 +1,7 @@
 Flask
-Flask-SQLAlchemy
-Flask-WTF
-Flask-Login
 Flask-Script
+Flask-SQLAlchemy
+Flask-Login
+Flask-WTF
+WTForms-Alchemy
 passlib

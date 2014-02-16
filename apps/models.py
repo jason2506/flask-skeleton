@@ -44,8 +44,12 @@ class _CRUDMixin(object):
 class User(_CRUDMixin, UserMixin, db.Model):
     __tablename__ = 'user'
 
-    name = db.Column(db.String(32), nullable=False, index=True, unique=True)
-    pwd = db.Column(db.String(256), nullable=False)
+    name = db.Column(
+        db.String(32), nullable=False, index=True, unique=True,
+        info={'label': 'Username'})
+    pwd = db.Column(
+        db.String(256), nullable=False,
+        info={'label': 'Password'})
 
     @classmethod
     def login(cls, name, pwd):
