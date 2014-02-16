@@ -10,8 +10,6 @@ db = SQLAlchemy()
 
 
 class _CRUDMixin(object):
-    __table_args__ = {'extend_existing': True,
-                      'sqlite_autoincrement': True}
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
 
