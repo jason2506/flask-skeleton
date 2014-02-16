@@ -9,11 +9,9 @@ from .views import module
 __all__ = ('create_app',)
 
 
-def _init_db(app, create_db):
+def _init_db(app):
     db.app = app
     db.init_app(app)
-    if create_db:
-        db.create_all()
 
 
 def _init_jinja(app):
@@ -30,14 +28,14 @@ def _init_login(app):
     login_manager.login_view = '/login'
 
 
-def create_app(name=None, create_db=False):
+def create_app(name=None):
     if name is None:
         name = __name__
 
     app = Flask(name)
     app.config.from_object('config')
 
-    _init_db(app, create_db)
+    _init_db(app)
     _init_jinja(app)
     _init_login(app)
 
