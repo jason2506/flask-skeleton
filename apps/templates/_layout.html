@@ -4,17 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% with meta = site_meta %}
-      {% if inherit_site_meta %}
-        {% set meta = page_meta|default({}) %}
-      {% elif page_meta is defined %}
-        {% do meta.update(page_meta) %}
-      {% endif %}
-      {% for name, content in meta.iteritems() %}
-      <meta name="{{ name }}" content="{{ content }}">
-      {% endfor %}
-    {% endwith %}
-    <title>{% if page_title %}{{ page_title }} - {% endif %}{{ site_name }}</title>
+    <meta name="author" content="Chi-En Wu">
+    <meta name="description" content="Basic skeleton for flask applications.">
+    <meta name="keywords" content="flask, skeleton">
+    <title>{% if page_title %}{{ page_title }} - {% endif %}Skeleton</title>
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
