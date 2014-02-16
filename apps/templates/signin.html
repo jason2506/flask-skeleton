@@ -3,17 +3,15 @@
 {% set page_title = 'Sign in' %}
 {% block content %}
 <form method="post" role="form">
-  {{ form_field(form.name, placeholder=form.name.label.text, autofocus=True) }}
-  {{ form_field(form.pwd, placeholder=form.pwd.label.text) }}
-  <div class="form-group">
-    <div class="checkbox-group col-sm-offset-2 col-sm-10">
-      {{ form.remember }}
-      {{ form.remember.label }}
-    </div>
-    <div class="col-sm-offset-2 col-sm-10">
-      {{ form.csrf_token }}
-      <button class="btn btn-primary" type="submit">Sign in</button>
-    </div>
+  {{ form_field(form.name, autofocus=True) }}
+  {{ form_field(form.pwd) }}
+  <div class="checkbox-field">
+    {{ form.remember }}
+    {{ form.remember.label }}
+  </div>
+  <div class="form-footer">
+    {{ form.csrf_token }}
+    <button type="submit">Submit</button>
   </div>
 </form>
 {% endblock %}
