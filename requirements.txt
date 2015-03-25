@@ -1,7 +1,10 @@
 Flask
 Flask-Script
+Flask-Assets
 Flask-SQLAlchemy
 Flask-Login
 Flask-WTF
 WTForms-Alchemy
 passlib
+closure
+yuicompressor
