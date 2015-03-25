@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from flask.ext.login import UserMixin
 from flask.ext.sqlalchemy import SQLAlchemy
-from passlib.hash import sha256_crypt
+from flask_user import UserManager, UserMixin, SQLAlchemyAdapter
 
-__all__ = ('db', 'User')
+__all__ = ('db', 'User', 'user_manager')
 
 db = SQLAlchemy()
 
@@ -44,20 +43,23 @@ class _CRUDMixin(object):
 class User(_CRUDMixin, UserMixin, db.Model):
     __tablename__ = 'user'
 
-    name = db.Column(
-        db.String(32), nullable=False, index=True, unique=True,
-        info={'label': 'Username'})
-    pwd = db.Column(
-        db.String(256), nullable=False,
-        info={'label': 'Password'})
+    # User authentication information
+    email = db.Column(db.String(256), nullable=False, unique=True)
+    password = db.Column(db.String(55), nullable=False)
+    reset_password_token = db.Column(db.String(100), nullable=False)
 
-    @classmethod
-    def login(cls, name, pwd):
-        user = cls.query.filter_by(name=name).first()
-        if user is None or not sha256_crypt.verify(pwd, user.pwd):
-            return None
+    confirmed_at = db.Column(db.DateTime())
 
-        return user
+    is_enabled = db.Column(
+        db.Boolean(), nullable=False, server_default='0')
+    first_name = db.Column(
+        db.String(100), nullable=False, server_default='')
+    last_name = db.Column(
+        db.String(100), nullable=False, server_default='')
 
-    def set_pwd(self, pwd):
-        self.pwd = sha256_crypt.encrypt(pwd)
+    def is_active(self):
+        return self.is_enabled
+
+
+_db_adapter = SQLAlchemyAdapter(db, User)
+user_manager = UserManager(_db_adapter)

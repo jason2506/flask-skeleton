@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask
-from flask.ext.login import LoginManager
 from flask.ext.assets import Environment, Bundle
 
-from .models import db, User
+from .models import db, user_manager
 from .views import module
 
 __all__ = ('create_app',)
@@ -36,12 +35,9 @@ def _init_jinja(app):
     pass
 
 
-def _init_login(app):
-    """Setup for Flask-Login."""
-    login_manager = LoginManager()
-    login_manager.init_app(app)
-    login_manager.user_loader(User.get)
-    login_manager.login_view = '/signin'
+def _init_user(app):
+    """Setup for Flask-User."""
+    user_manager.init_app(app)
 
 
 def _init_modules(app):
@@ -60,7 +56,7 @@ def create_app(name=None):
     _init_db(app)
     _init_assets(app)
     _init_jinja(app)
-    _init_login(app)
+    _init_user(app)
     _init_modules(app)
 
     return app
