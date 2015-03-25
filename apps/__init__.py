@@ -44,6 +44,11 @@ def _init_login(app):
     login_manager.login_view = '/signin'
 
 
+def _init_modules(app):
+    """Setup for blueprints"""
+    app.register_blueprint(module)
+
+
 def create_app(name=None):
     """Create and initialize app."""
     if name is None:
@@ -56,6 +61,6 @@ def create_app(name=None):
     _init_assets(app)
     _init_jinja(app)
     _init_login(app)
+    _init_modules(app)
 
-    app.register_blueprint(module)
     return app
